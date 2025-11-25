@@ -142,7 +142,7 @@ public:
       }
       return t;
   }
-  TDynamicVector operator-(double val)
+  TDynamicVector operator-(T val)
   {
       TDynamicVector<T> t(sz);
       for (int i = 0; i < sz; i++)
@@ -151,7 +151,7 @@ public:
       }
       return t;
   }
-  TDynamicVector operator*(double val)
+  TDynamicVector operator*(T val)
   {
       TDynamicVector<T> t(sz);
       for (int i = 0; i < sz; i++)
@@ -238,8 +238,9 @@ public:
   }
 
   using TDynamicVector<TDynamicVector<T>>::operator[];
+  using TDynamicVector<TDynamicVector<T>>::at;
   
-  //size_t size() const noexcept { return sz; }
+  size_t size() const noexcept { return sz; }
 
   // сравнение
   bool operator==(const TDynamicMatrix& m) const noexcept
