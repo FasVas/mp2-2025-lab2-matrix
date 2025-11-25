@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-using namespace std;
+//using namespace std;
 
 const int MAX_VECTOR_SIZE = 100000000;
 const int MAX_MATRIX_SIZE = 10000;
@@ -25,7 +25,7 @@ protected:
 public:
   TDynamicVector(size_t size = 1) : sz(size)
   {
-    if (sz == 0)
+    if (sz <= 0)
         throw out_of_range("Vector size should be straight");
     if (sz > MAX_VECTOR_SIZE)
         throw "Vector should be of a reasonable size";
@@ -34,14 +34,14 @@ public:
   TDynamicVector(T* arr, size_t s) : sz(s)
   {
     assert(arr != nullptr && "TDynamicVector vector requires non-nullptr argument");
-    if (sz == 0)
+    if (sz <= 0)
         throw out_of_range("Vector size should be straight");
     if (sz > MAX_VECTOR_SIZE)
         throw "Vector should be of a reasonable size";
     pMem = new T[sz];
     std::copy(arr, arr + sz, pMem);
   }
-  TDynamicVector(const TDynamicVector& v)
+  TDynamicVector(const TDynamicVector& v):sz(v.sz)
   {
       pMem = new T[sz];
       std::copy(v.pMem, v.pMem+sz, pMem);
@@ -66,10 +66,13 @@ public:
           {
               std::copy(v.pMem, v.pMem + sz, pMem);
           }
-          delete[] pMem;
-          sz = v.sz;
-          pMem = new T[sz];
-          copy(v.pMem, v.pMem+sz, pMem);
+          else 
+          {
+              delete[] pMem;
+              sz = v.sz;
+              pMem = new T[sz];
+              copy(v.pMem, v.pMem + sz, pMem);
+          }
       }
       return *this;
   }
@@ -200,13 +203,13 @@ public:
   }
 
   // ввод/вывод
-  friend istream& operator>>(istream& istr, TDynamicVector& v)
+  friend std::istream& operator>>(std::istream& istr, TDynamicVector& v)
   {
     for (size_t i = 0; i < v.sz; i++)
       istr >> v.pMem[i]; // требуется оператор>> для типа T
     return istr;
   }
-  friend ostream& operator<<(ostream& ostr, const TDynamicVector& v)
+  friend std::ostream& operator<<(std::ostream& ostr, const TDynamicVector& v)
   {
     for (size_t i = 0; i < v.sz; i++)
       ostr << v.pMem[i] << ' '; // требуется оператор<< для типа T
@@ -327,7 +330,7 @@ public:
   }
 
   // ввод/вывод
-  friend istream& operator>>(istream& istr, TDynamicMatrix& v)
+  friend std::istream& operator>>(std::istream& istr, TDynamicMatrix& v)
   {
       for (int i = 0; i < v.sz; i++)
       {
@@ -335,7 +338,7 @@ public:
       }
       return istr;
   }
-  friend ostream& operator<<(ostream& ostr, const TDynamicMatrix& v)
+  friend std::ostream& operator<<(std::ostream& ostr, const TDynamicMatrix& v)
   {
       for (int i = 0; i < v.sz; i++)
       {
