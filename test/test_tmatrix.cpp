@@ -63,7 +63,7 @@ TEST(TDynamicMatrix, throws_when_set_element_with_negative_index)
 TEST(TDynamicMatrix, throws_when_set_element_with_too_large_index)
 {
 	TDynamicMatrix<int> m(5);
-	ASSERT_ANY_THROW(m[6][7]);
+	ASSERT_ANY_THROW(m.at(6).at(7));
 }// SIX SEVEN
 
 TEST(TDynamicMatrix, can_assign_matrix_to_itself)
